@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>guru.springframework</groupId>
+  <artifactId>hello-world</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+  	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.8.1</version>
+	</dependency>
+  </dependencies>
+  
+<build>
+  	<plugins>
+  		<!-- Nota: Los plugins de Maven ya existen de manera predefinida. Lo que hacemos aquí es sobrescribir sus comportamientos por defecto -->
+  		<plugin>
+  			<!-- Plugin de maven para limpiar y eliminar el directorio "/target" -->
+  			<!-- Capturamos la fase "initialize", que pertenece al ciclo de vida "Default" de maven, para ejecutar el goal "clean" del plugin "maven-clean-plugin" -->
+  			<!-- De esta manera, cada vez que ejecutemos "package" o "compile"(en realidad cualquier fase que sea del ciclo de vida "Default"), de forma automática se eliminará previamente, si existe, el directorio "target" del proyecto y, después, se volverá a crear para empaquetar de nuevo dicho proyecto -->
+  			<artifactId>maven-clean-plugin</artifactId>
+  			<version>3.1.0</version>
+  			<executions>
+  				<execution>
+  					<id>auto-clean</id>
+  					<phase>initialize</phase>
+  					<goals>
+  						<goal>clean</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
+  		<plugin>
+  			<!-- Este plugin de Maven se encarga de generar el archivo comprimido .jar del proyecto cuando se empaqueta -->
+  			<artifactId>maven-jar-plugin</artifactId>
+  			<version>3.1.0</version>
+  			<configuration>
+  				<archive>
+  					<manifest>
+  						<addClasspath>true</addClasspath>
+  						<mainClass>HelloWorld</mainClass>
+  					</manifest>
+  				</archive>
+  			</configuration>
+  		</plugin>
+		<plugin>
+  			<!-- Este plugin de Maven se encarga de generar una aplicación web en el directorio "/target/site" con documentación sobre el proyecto -->
+  			<!-- Sobrescribimos el comportamiento por defecto de este plugin para que utilice la versión 3.7.1 -->
+  			<artifactId>maven-site-plugin</artifactId>
+  			<version>3.7.1</version>
+  		</plugin>
+  	</plugins>
+  </build>
+  
+</project>

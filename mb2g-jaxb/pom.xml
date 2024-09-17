@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>guru.springframework</groupId>
+  <artifactId>mb2g-jaxb</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  
+  <properties>
+   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <jaxb.version>2.3.0</jaxb.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+  
+  <!-- Dependencias para serializar y deserializar objetos de Java a Xml's de forma automática. Estas dependencias son necesarias para poder usar el plugin "maven-jaxb2-plugin" -->
+  <!-- A partir de la versión 8 de Java, estas librerías ya no se incluyen -->
+  <!-- Por esta razón y como estamos usando la versión 11 de Java, las tenemos que incluir a mano -->
+  <dependencies>
+  	<dependency>
+  		<groupId>javax.xml.bind</groupId>
+     	<artifactId>jaxb-api</artifactId>
+     	<version>${jaxb.version}</version>
+	</dependency>
+ 	<dependency>
+   		<groupId>com.sun.xml.bind</groupId>
+     	<artifactId>jaxb-core</artifactId>
+     	<version>${jaxb.version}</version>
+ 	</dependency>
+ 	<dependency>
+ 		<groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb.version}</version>
+   	</dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<!-- Plugin de maven para limpiar y eliminar el directorio "/target" -->
+  			<!-- Capturamos la fase "initialize", que pertenece al ciclo de vida "Default" de maven, para ejecutar el goal "clean" del plugin "maven-clean-plugin" -->
+  			<!-- De esta manera, cada vez que ejecutemos "package" o "compile"(en realidad cualquier fase que sea del ciclo de vida "Default"), de forma automática se eliminará previamente, si existe, el directorio "target" del proyecto y, después, se volverá a crear para empaquetar de nuevo dicho proyecto -->
+  			<artifactId>maven-clean-plugin</artifactId>
+  			<version>3.1.0</version>
+  			<executions>
+  				<execution>
+  					<id>auto-clean</id>
+  					<phase>initialize</phase>
+  					<goals>
+  						<goal>clean</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
+  		<plugin>
+  			<!-- Plugin necesario para generar clases de Java a partir de Xsd's de forma automática -->
+		    <groupId>org.jvnet.jaxb2.maven2</groupId>
+		    <artifactId>maven-jaxb2-plugin</artifactId>
+		    <version>0.14.0</version>
+		    <executions>
+		    	<execution>
+		    		<goals>
+		    			<goal>generate</goal>
+		    		</goals>
+		    	</execution>
+		    </executions>
+  		</plugin>
+  	</plugins>
+  </build>
+</project>

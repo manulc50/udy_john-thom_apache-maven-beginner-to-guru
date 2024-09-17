@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>guru.springframework</groupId>
+  <artifactId>mb2g-testing-junit5</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  
+  <properties>
+   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <junit.version>5.7.2</junit.version>
+  </properties>
+  
+  <dependencies>
+	<!-- Dependencias para usar JUnit 5(También llamado JUnit Jupiter) -->
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-api</artifactId>
+	    <version>${junit.version}</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-engine</artifactId>
+	    <version>${junit.version}</version>
+	    <scope>test</scope>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+        <plugin>
+        	<!-- Sobrescribimos el comportamiento por defecto del plugin de Maven "maven-surefire-plugin" para que utilice la versión "2.22.2" -->
+        	<!-- Esto lo hacemos porque la versión por defecto de este plugin de Maven actualmente no es compatible con JUnit 5 -->
+        	<!-- A partir de la versión "2.22.0" del plugin, ya se integra con JUnit 5 -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.2</version>
+        </plugin>
+    </plugins>
+  </build>
+  
+</project>

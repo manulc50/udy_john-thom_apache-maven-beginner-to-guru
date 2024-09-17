@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>guru-springframework</groupId>
+  <artifactId>mb2g-json-schema</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  
+  <properties>
+   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+  	<!-- Dependencia requerida por la dependencia de abajo "jackson-databind" para que pueda generar los métodos "equals" y "hashCode" -->
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>3.8.1</version>
+  	</dependency>
+  	<!-- Dependencias para serializar y deserializar objetos de Java a objetos Json's de forma automática. Estas dependencia es necesaria para poder usar el plugin "jsonschema2pojo-maven-plugin" -->
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-databind</artifactId>
+  		<version>2.9.7</version>
+  	</dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<!-- Plugin necesario para generar clases de Java a partir de objetos Json's de forma automática -->
+  			<groupId>org.jsonschema2pojo</groupId>
+  			<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+  			<version>0.5.1</version>
+  			<configuration>
+  				<!-- Indicamos la ruta donde se encuentran los objetos Json's -->
+  				<!-- "basedir" es una propiedad predefinida de Maven que nos da la ruta base del proyecto -->
+  				<sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
+  				<!-- Indicamos el paquete destino donde se crearán las clases Java -->
+  				<targetPackage>guru.springframework.model</targetPackage>
+  				<!-- Indicamos que utilice la librería "commons-lang3" de Apache para generar los métodos "equals" y "hashCode" -->
+  				<useCommonsLang3>true</useCommonsLang3>
+  			</configuration>
+  			<executions>
+  				<execution>
+  					<goals>
+  						<goal>generate</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
+  	</plugins>
+  </build>
+</project>
